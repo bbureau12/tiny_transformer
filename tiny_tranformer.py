@@ -208,3 +208,27 @@ if __name__ == "__main__":
 
     # Show toy attention on one of the fixed sentences
     show_attention_heatmap(model, tok, "the cat sat on the mat")
+    # --- Interactive input round ---
+    print("\nInteractive mode (type 'exit' to quit).")
+    while True:
+        try:
+            user_in = input("Prompt> ").strip()
+        except EOFError:
+            print()
+            break
+        if not user_in or user_in.lower() in {"exit", "quit", ":q"}:
+            break
+
+        # Optionally let the user set max tokens inline like: "the cat || 12"
+        if "||" in user_in:
+            prompt_text, max_tok_str = map(str.strip, user_in.split("||", 1))
+            try:
+                max_tok = int(max_tok_str)
+            except ValueError:
+                print("  (Invalid max token count; using 12)")
+                max_tok = 12
+        else:
+            prompt_text, max_tok = user_in, 12
+
+        out = generate(model, tok, prompt_text, max_new_tokens=max_tok)
+        print(f"  {prompt_text} … {out}")
