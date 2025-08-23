@@ -11,4 +11,4 @@ Great for **quick demos** of the Transformer architecture.
 git clone https://github.com/yourname/tiny-transformer-demo
 cd tiny-transformer-demo
 pip install torch
-python tiny_transformer_10.py
+python pt_1_embedding_demo.py
